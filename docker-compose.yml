@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  clockchain:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: "postgresql+asyncpg://postgres:postgres@db:5432/hermes_clockchain"
+      OPENROUTER_API_KEY: "${OPENROUTER_API_KEY}"
+      FREE_DISTILLABLE_MODE: "true"
+      EXPANSION_ENABLED: "true"
+      EXPANSION_DAILY_BUDGET: "0"
+      WRITER_TOKENS: "${WRITER_TOKENS:-}"
+      ADMIN_TOKEN: "${ADMIN_TOKEN:-}"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: hermes_clockchain
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  pgdata:

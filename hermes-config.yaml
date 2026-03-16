@@ -1,0 +1,25 @@
+# Hermes Agent MCP Configuration for Hermes History Clockchain
+# Add this to your ~/.hermes/config.yaml under mcp_servers:
+#
+# For remote deployment:
+mcp_servers:
+  hermes-clockchain:
+    url: "https://your-clockchain-url.example.com/mcp"
+    headers:
+      Authorization: "Bearer YOUR_WRITER_TOKEN"
+    timeout: 120
+    connect_timeout: 30
+    tools:
+      resources: true
+      prompts: false
+
+# For local development (stdio transport):
+# mcp_servers:
+#   hermes-clockchain:
+#     command: "uvicorn"
+#     args: ["app.main:application", "--host", "0.0.0.0", "--port", "8000"]
+#     env:
+#       DATABASE_URL: "sqlite+aiosqlite:///./hermes-clockchain.db"
+#       FREE_DISTILLABLE_MODE: "true"
+#       OPENROUTER_API_KEY: "your-key-here"
+#     timeout: 120
