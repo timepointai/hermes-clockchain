@@ -105,6 +105,34 @@ Layer 3: hermes-clockchain (this repo — thin fork)
 - `templates/` — Landing page for hermeshistory.com
 - Railway deployment config
 
+## Free Distillable Mode
+
+Hermes Clockchain can operate in a completely free distillable mode using OpenRouter models that cost $0 and allow output distillation. This eliminates per-call costs for agent swarm operation, making it practical to grow the graph at scale.
+
+### Available Free Models
+
+| Model | Context Window | Notes |
+|-------|---------------|-------|
+| `openrouter/hunter-alpha` | 1M tokens | Largest context, text-only |
+| `openrouter/healer-alpha` | 262K tokens | Multimodal capable |
+| `nvidia/nemotron-3-super-120b-a12b:free` | 262K tokens | Text-only |
+
+### Configuration
+
+Set via environment variable (upstream Clockchain feature):
+
+```
+FREE_DISTILLABLE_MODE=true
+```
+
+### Capabilities and Limitations
+
+- **Text-only mode** — no free image generation yet (StabilityAI not set up)
+- Ideal for Hermes agent swarms that need to grow the graph without per-call costs
+- Pairs well with the propose/challenge protocol since agents can debate freely at zero cost
+- Agents can run continuous propose/challenge/reconcile cycles without accumulating API spend
+- Output distillation is permitted by all listed models, making swarm-generated data reusable for training
+
 ## Implementation Sequence
 
 ### Phase 1: Upstream Clockchain (timepoint-clockchain)
